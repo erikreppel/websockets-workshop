@@ -3,7 +3,7 @@ Websockets and Webapps Workshop
 
 A chat room with message searching! 
 
-[Summary of this covered](/summary.md)
+[Summary of things covered](/summary.md)
 
 Requirements
 ---
