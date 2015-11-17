@@ -1,0 +1,66 @@
+body {
+	font-family: 'Lato', sans-serif;
+}
+li {
+ 	list-style-type: none;
+	padding: 5px 10px;
+}
+p {
+	margin: 8px 0;
+	font-weight: 200;
+	letter-spacing: 0.2px;
+}
+textarea {
+	resize: none;
+	overflow: hidden;
+}
+h2 {
+	margin: 0;
+	font-size: 2rem;
+	letter-spacing: 0.01px;
+	padding: 16px 0 8px 0;
+	font-weight: 400;
+}
+/*Account for no left margin on user-column*/
+.two.columns {
+	width: 17%;
+}
+.user-column {
+	padding: 0 16px;
+	background-color: #4D394B;
+	color: #fff;
+	height: 100vh;
+}
+.user-column p {
+	color: rgba(255,255,255,0.5);
+}
+
+#messages {
+	overflow: auto;
+}
+
+.message-column {
+	height: 100vh;
+	/*flexbox webkits for firefox and safari*/
+	display: -webkit-flex;
+    display: -moz-flex;
+	display: flex;
+	-webkit-flex-direction:column;
+    -moz-flex-direction:column;
+	flex-direction: column;
+	-webkit-justify-content: flex-end;
+    -moz-justify-content: flex-end;
+	justify-content: flex-end;
+}
+.search-column {
+	padding: 16px;
+	margin-left: 0;
+	margin-right: 0;
+}
+.message-input-box {
+	padding: 0 8px;
+}
+/*overflow textarea to overlap in search column*/
+.message-input-box .u-full-width {
+	width: 125%;
+}

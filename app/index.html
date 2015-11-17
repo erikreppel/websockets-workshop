@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Talky Talk</title>
+	<link rel="stylesheet" type="text/css" href="skeleton.css">
+	<link rel="stylesheet" type="text/css" href="normalize.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
+
+	<!-- Bomb Ass Slack Look-Alike Font -->
+	<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<div class="container">
+		<div class="user-column two columns">
+			<h2>Chat Room (Or Rap Room?)</h2>
+			<div id="users">
+			</div>
+		</div>
+		<div class="row">
+			<div class="message-column eight columns">
+				<ul id="messages">
+				</ul>
+				<form class="message-input-box" id="inputForm">
+					<div class="row">
+						<div class="twelve columns">
+							<textarea class="u-full-width" id="messageForm" placeholder="Say something!"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="search-column two columns">
+				<input class="u-full-width" type="text" placeholder="Search" id="searchBar">
+				<div id="searchResults">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/index.js"></script>
+</body>
+
+</html>
