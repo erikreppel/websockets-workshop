@@ -1,4 +1,4 @@
-var socket = socketio();
+var socket = io.connect(window.location.href); // io is imported in index.html
 
 // handle username
 var username = getCookie("username");
@@ -6,23 +6,35 @@ if (!username) {
 	var tempUsername = "anon" + Math.floor((Math.random() * 1000) + 1);
 	username = prompt("Please enter a user name!", tempUsername);
 	setCookie('username', username, 7);
-	//!!!Emit new user active
+	socket.emit('newUser', {
+		'user': username
+	});
 }
 if (username)
-	// emit new user active
+	socket.emit('newUser', {
+		'user': username
+	});
 
-// Handle receiving conversation history
+// Handles receiving a history of the conversation
+socket.on('msgHistory', function(data) {
+	var messages = data.messages;
+	for (var i = messages.length - 1; i >= 0; i--) {
+		console.log(messages[i]);
+		displayMessage(messages[i]);
+	}
+});
 
-
-// Handle receiving new message
-
+// Handle receiving messages
+socket.on('messageReceived', function(message) {
+	displayMessage(message);
+});
 
 // Handle sending messages
 $('#messageForm').keypress(function() {
 	// this piece allows us to submit when a user hit enter
 	var keyCode = (event.keyCode ? event.keyCode : event.which);
 	if ((event.keyCode || event.which) == 13) {
-		// emit new message
+		sendMessage();
 	}
 });
 
@@ -31,19 +43,25 @@ $('#searchBar').keypress(function() {
 	//this piece allows us to submit when a user hit enter
 	var keyCode = (event.keyCode ? event.keyCode : event.which);
 	if ((event.keyCode || event.which) == 13) {
-		// emit search query
+		sendSearch();
 	}
 });
 
 // Handle search results
-
+socket.on('searchResults', function(resp) {
+	displaySearchResults(resp.results);
+});
 
 // Update the list of users when a new user enters the room
-
+socket.on('updateUsers', function(activeUsers) {
+	displayUsers(activeUsers.users);
+});
 
 // want to tell the server we are leaving before we leave
 $(window).bind('beforeunload', function() {
-	// emit user leaving page event
+	socket.emit('userLeaving', {
+		'user': username
+	});
 });
 
 
@@ -76,14 +94,23 @@ function displaySearchResults(results) {
 }
 
 // Helper function to help us send messages
+// not essential but nice since we have multiple triggers to send messages
 function sendMessage() {
-	// implement this function!
-	return false;
+	var message = {
+		'timestamp': Date.now(),
+		'text': $('#messageForm').val(),
+		'user': username
+	};
+	socket.emit('sendMessage', message);
+	$('#inputForm').trigger("reset");
 }
 
 // get the search request and send to server
 function sendSearch() {
-	//implement this function
+	var search = {
+		'q': $('#searchBar').val()
+	};
+	socket.emit('searchRequest', search);
 }
 
 // Helper function to set cookies. Shoutout to W3
